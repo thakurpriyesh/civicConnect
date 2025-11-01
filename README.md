@@ -38,7 +38,7 @@ Whether it’s a pothole, garbage pile-up, broken streetlight, or water leakage 
 
 ## ⚙️ Installation & Setup
 
-
+```bash
 # Clone the repository
 git clone https://github.com/thakurpriyesh/civicConnect.git
 
