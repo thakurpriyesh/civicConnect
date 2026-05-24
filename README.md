@@ -92,3 +92,7 @@ npm install
 npm start
 ```
 Once all three services are running, you can access the application at http://localhost:3000.
+
+## Live Demo
+
+Frontend: https://civic-connect-lilac.vercel.app
