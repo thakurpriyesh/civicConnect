@@ -1,15 +1,22 @@
 # File: ai-service/main.py
 
 from fastapi import FastAPI, UploadFile, File
-from transformers import ViTImageProcessor, ViTForImageClassification
+from transformers import AutoImageProcessor, AutoModelForImageClassification
 from PIL import Image
+from dotenv import load_dotenv
 import torch
+import os
 
-app = FastAPI()
+load_dotenv()
+app=FastAPI()
+MODEL_NAME = os.getenv(
+    "MODEL_NAME",
+    "google/vit-base-patch16-224"
+)
 
 # Load the pre-trained model and processor
-processor = ViTImageProcessor.from_pretrained('google/vit-base-patch16-224')
-model = ViTForImageClassification.from_pretrained('google/vit-base-patch16-224')
+processor = AutoImageProcessor.from_pretrained(MODEL_NAME)
+model = AutoModelForImageClassification.from_pretrained(MODEL_NAME)
 
 # --- NEW: Prioritized Keyword Mapping ---
 # We will check for keywords in this specific order.
