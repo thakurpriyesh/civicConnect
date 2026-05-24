@@ -11,7 +11,10 @@ function Login({ onLogin }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/api/login', { username, password });
+            const res = await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/login`,
+    { username, password }
+);
             onLogin(res.data.user); // Pass the user object up to App.js
         } catch (err) {
             setError('Invalid credentials. Please try again.');

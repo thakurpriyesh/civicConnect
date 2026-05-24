@@ -9,12 +9,12 @@ function Home({ currentUser, onLogout }) {
     const [activeTab, setActiveTab] = useState('feed'); // 'feed' or 'my-issues'
 
     const fetchAllIssues = async () => {
-        const res = await axios.get('/api/issues');
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/issues`);
         setAllIssues(res.data);
     };
 
     const fetchMyIssues = async () => {
-        const res = await axios.get(`/api/issues/by/${currentUser.username}`);
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/issues/by/${currentUser.username}`);
         setMyIssues(res.data);
     };
 
@@ -33,7 +33,8 @@ function Home({ currentUser, onLogout }) {
     const handleVote = async (id, voteType) => {
         try {
             // Call the new unified endpoint
-            await axios.put(`/api/issues/${id}/vote`, {
+            await axios.put(
+    `${process.env.REACT_APP_API_URL}/api/issues/${id}/vote`, {
                 userId: currentUser.username,
                 voteType: voteType
             });

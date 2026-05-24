@@ -16,7 +16,8 @@ function IssueForm({ currentUser, onNewIssue }) {
         formData.append('author', currentUser.username);
 
         try {
-            await axios.post('/api/issues', formData, {
+            await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/issues`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             onNewIssue();

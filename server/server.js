@@ -276,7 +276,7 @@ app.post('/api/issues', upload.single('image'), async (req, res) => {
         );
 
         const aiResponse = await axios.post(
-            'http://127.0.0.1:8000/analyze-image/',
+            `${process.env.AI_SERVICE_URL}/analyze-image/`,
             formData,
             {
                 headers: formData.getHeaders()
@@ -437,7 +437,7 @@ app.put('/api/issues/:id/vote', async (req, res) => {
         });
     }
 });
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
