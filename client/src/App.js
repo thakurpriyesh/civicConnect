@@ -23,9 +23,9 @@ function App() {
 
     return (
         <div className="App">
-            <div className="app-header">
+            {/* <div className="app-header">
                 <h1>CivicConnect</h1>
-            </div>
+            </div> */}
             <main>
                 {currentUser ? (
                     <Home currentUser={currentUser} onLogout={handleLogout} />

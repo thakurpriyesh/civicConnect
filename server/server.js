@@ -291,7 +291,7 @@ app.post('/api/issues', upload.single('image'), async (req, res) => {
                 lat: parseFloat(lat),
                 lng: parseFloat(lng)
             },
-            imageUrl: `http://localhost:5001/uploads/${req.file.filename}`,
+            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
             author
         });
 
