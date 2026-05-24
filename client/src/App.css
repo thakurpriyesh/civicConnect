@@ -1,0 +1,329 @@
+/* File: client/src/App.css */
+body {
+  font-family: sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+.app-header {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  /* padding: 20px; */
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.issue-form {
+  background: white;
+  padding: 20px 20px;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  border: 1px solid black;
+  margin-bottom: 30px;
+}
+
+.issue-form input {
+  margin-right: 10px;
+}
+
+.issue-form button {
+  padding: 10px 15px;
+  background-color: #3498db;
+  color: white;
+  border: 1px solid black;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
+.issue-feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.issue-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: left;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  border: 1px solid black;
+}
+
+.card-image-placeholder {
+  height: 150px;
+  background-color: #ecf0f1;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.issue-card h4 {
+  margin-top: 0;
+}
+
+.issue-card .status {
+  /* font-weight: bold; */
+  font-size: 0.9em;
+  padding: 3px 8px;
+  border-radius: 50px;
+  color: white;
+}
+
+.status-submitted {
+  background-color: #3498db;
+  border: 1px solid black;
+}
+
+.voting button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  background-color: #ecf0f1;
+}
+
+/* Add these styles to client/src/App.css */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.login-form h2 {
+  margin-top: 0;
+}
+
+.login-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+.welcome-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eaf5ff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.logout-button {
+  background: #d71500;
+  color: white;
+  border: 1px solid black;
+  padding: 8px 12px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.feed-tabs {
+  margin-bottom: 20px;
+}
+
+.feed-tabs button {
+  /* display: flex;
+  justify-content: center; */
+  padding: 10px 20px;
+  border: 1px solid #000000;
+  background: #f4f4f4;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.feed-tabs button.active {
+  background: #3498db;
+  color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-color: #000000;
+}
+
+.author-tag {
+  font-size: 0.8em;
+  color: #7f8c8d;
+  /* font-style: italic; */
+}
+
+.voting button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* Add these styles to client/srcp/App.css */
+.voting {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.voting button {
+  flex: 1;
+  padding: 8px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  background-color: #7f8c8d;
+  /* A neutral gray color */
+  transition: background-color 0.2s;
+}
+
+.voting button:hover {
+  opacity: 0.8;
+}
+
+/* Style for the upvote button */
+.voting button:first-of-type {
+  background-color: #27ae60;
+  border: 1px solid black;
+  /* Green */
+}
+
+/* Style for the downvote button */
+.voting button:last-of-type {
+  background-color: #c0392b;
+  border: 1px solid black;
+  /* Red */
+}
+
+/* Style for a button when the user has voted */
+.voting button.voted {
+  border: 2px solid rgb(219, 219, 219);
+  box-shadow: 0 0 5px rgba(52, 73, 94, 0.7);
+}
+
+/* Style for the custom file input button */
+.custom-file-button {
+    background-color: #ddebf7;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 50px;
+    padding: 8px 12px;
+    cursor: pointer;
+    /* display: inline-block; */
+}
+
+.custom-file-button:hover {
+  background-color: #3498db;
+}
+
+/* Responsive styles for .issue-form and its children */
+@media (max-width: 600px) {
+  .issue-form {
+  padding: 12px 8px;
+  margin-bottom: 18px;
+  }
+
+  .issue-form input,
+  .issue-form button,
+  .custom-file-button {
+  width: 100%;
+  margin: 8px 0 0 0;
+  box-sizing: border-box;
+  }
+
+  .input-container {
+  flex-direction: column;
+  /* align-items: stretch; */
+  max-width: 130px;
+  }
+
+  .file-name {
+  max-width: 100%;
+  min-width: 0;
+  margin-left: 0;
+  margin-top: 4px;
+  }
+
+  .form-content {
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  }
+
+  .issue-form button {
+  margin-left: 0;
+  max-width: 130px;
+  }
+}
+
+.input-container {
+    display: flex; /* Aligns button and text on the same line */
+    align-items: center; /* Vertically centers them */
+    /* margin-bottom: 15px; Replaces the old 'issue-form div' rule */
+}
+
+/* Style for the file name text */
+.file-name {
+    margin-left: 5px;
+    font-family: sans-serif;
+    color: #555;
+    
+    /* === ADD THESE LINES FOR TRUNCATION === */
+    white-space: nowrap;      /* 1. Prevents the text from wrapping to a new line */
+    overflow: hidden;         /* 2. Hides any text that goes beyond the element's bounds */
+    text-overflow: ellipsis;  /* 3. Adds the "..." at the end */
+    max-width: 120px;
+    min-width: 120px;         /* 4. IMPORTANT: Set a max width for truncation to work. Adjust as needed! */
+}
+
+/* Optional: Add some spacing for the form elements */
+.form-content {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+}
