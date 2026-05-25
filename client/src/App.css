@@ -685,6 +685,18 @@ body {
   transition: transform 0.4s ease;
 }
 
+.card-image-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef1f6;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
 .issue-card:hover .card-image { transform: scale(1.04); }
 
 /* Urgency badge */

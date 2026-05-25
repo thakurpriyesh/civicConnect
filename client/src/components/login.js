@@ -1,8 +1,7 @@
 // File: client/src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const API_BASE = process.env.REACT_APP_API_URL || '';
+import { API_BASE } from '../config/api';
 
 function Login({ onLogin }) {
     const [mode, setMode] = useState('signin');

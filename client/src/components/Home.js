@@ -2,8 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import IssueForm from './IssueForm';
-
-const API_BASE = process.env.REACT_APP_API_URL || '';
+import { API_BASE, resolveUploadUrl } from '../config/api';
 
 /* ── Skeleton loader card ── */
 function SkeletonCard() {
@@ -95,6 +94,7 @@ function IssueCard({ issue, currentUser, onVote, onDelete, onResolve, showAdminA
     const isAdmin = currentUser.role === 'admin';
     const isOwner = issue.author === currentUser.username;
     const resolutionTime = getResolutionTime(issue);
+    const [imageFailed, setImageFailed] = useState(false);
 
     const handleVote = (type) => {
         if (isAdmin || !onVote) return;
@@ -109,12 +109,17 @@ function IssueCard({ issue, currentUser, onVote, onDelete, onResolve, showAdminA
     return (
         <div className="issue-card">
             <div className="card-image-wrap">
-                <img
-                    src={issue.imageUrl}
-                    alt={issue.category}
-                    className="card-image"
-                    loading="lazy"
-                />
+                {imageFailed ? (
+                    <div className="card-image-fallback">Image unavailable</div>
+                ) : (
+                    <img
+                        src={resolveUploadUrl(issue.imageUrl)}
+                        alt={issue.category}
+                        className="card-image"
+                        loading="lazy"
+                        onError={() => setImageFailed(true)}
+                    />
+                )}
                 <UrgencyBadge status={issue.status} />
             </div>
             <div className="card-body">

@@ -2,8 +2,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import '../App.css';
-
-const API_BASE = process.env.REACT_APP_API_URL || '';
+import { API_BASE } from '../config/api';
 
 function IssueForm({ currentUser, onNewIssue, onClose }) {
     const [file, setFile] = useState(null);

@@ -230,7 +230,7 @@ app.post('/api/issues', upload.single('image'), async (req, res) => {
                 lat: parseFloat(lat),
                 lng: parseFloat(lng)
             },
-            imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
+            imageUrl: `/uploads/${req.file.filename}`,
             author
         });
 
