@@ -142,4 +142,4 @@ Successfully integrated:
 # 👨‍💻 Author
 
 **Priyesh Kumar Thakur**  
-🎓 B.Tech CSE Student — Galgotias University
+🎓 Software Developer
