@@ -28,7 +28,6 @@ Users can upload images of issues, and the platform automatically analyzes them 
 ## 🤖 AI-Powered Issue Detection
 - Automatic image-based issue categorization
 - AI-assisted issue caption generation
-- Urgency prediction system
 - Lightweight PyTorch inference pipeline
 
 ---
@@ -121,27 +120,21 @@ Successfully integrated:
 # 📷 Screenshots
 
 ## 🏠 Dashboard
-_Add screenshot here_
+![Dashboard](images/dashboard.png)
 
-## 📸 AI Issue Detection
-_Add screenshot here_
-
-## 📰 Live Feed
-_Add screenshot here_
+## 📰 Admin
+![Admin Panel](images/admin.png)
 
 ## 📱 Responsive UI
-_Add screenshot here_
+![Responsive UI](images/mobile.png)
 
 ---
 
 # 📈 Future Improvements
 
 - 🔐 JWT Authentication
-- 🗺️ Google Maps Integration
-- 📍 Geolocation-based issue reporting
 - ☁️ Cloudinary image hosting
 - 👨‍💼 Admin dashboard
-- 🔔 Real-time notifications
 - 🧠 Custom-trained civic issue detection model
 
 ---
