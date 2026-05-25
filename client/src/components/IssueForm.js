@@ -3,9 +3,12 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import '../App.css';
 
-function IssueForm({ currentUser, onNewIssue }) {
+const API_BASE = process.env.REACT_APP_API_URL || '';
+
+function IssueForm({ currentUser, onNewIssue, onClose }) {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [description, setDescription] = useState('');
     const [dragOver, setDragOver] = useState(false);
     const [loading, setLoading] = useState(false);
     const [location] = useState({ lat: 12.9716, lng: 77.5946 });
@@ -42,17 +45,20 @@ function IssueForm({ currentUser, onNewIssue }) {
         formData.append('lat', location.lat);
         formData.append('lng', location.lng);
         formData.append('author', currentUser.username);
+        formData.append('description', description.trim());
 
         try {
             await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/issues`,
+                `${API_BASE}/api/issues`,
                 formData,
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );
             handleRemove();
+            setDescription('');
             onNewIssue();
+            onClose?.();
         } catch (error) {
-            alert('Failed to report issue. Please try again.');
+            alert(error.response?.data?.message || 'Failed to report issue. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -61,7 +67,19 @@ function IssueForm({ currentUser, onNewIssue }) {
     return (
         <form onSubmit={handleSubmit}>
             <div className="issue-form-card">
-                <h3>Report a New Civic Issue</h3>
+                <div className="issue-form-header">
+                    <h3>Report a New Civic Issue</h3>
+                    {onClose && (
+                        <button
+                            type="button"
+                            className="modal-close-button"
+                            onClick={onClose}
+                            aria-label="Close report form"
+                        >
+                            X
+                        </button>
+                    )}
+                </div>
 
                 {/* Drag-drop zone */}
                 {!preview ? (
@@ -105,18 +123,33 @@ function IssueForm({ currentUser, onNewIssue }) {
                     </div>
                 )}
 
+                <div className="form-group issue-description-field">
+                    <label className="form-label" htmlFor="issue-description">Description</label>
+                    <textarea
+                        id="issue-description"
+                        className="form-input issue-description-input"
+                        placeholder="Describe what is wrong, where it is, and what needs attention."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        rows={4}
+                        maxLength={300}
+                        required
+                    />
+                    <span className="description-count">{description.length}/300</span>
+                </div>
+
                 <button
                     type="submit"
                     className="submit-btn"
-                    disabled={!file || loading}
+                    disabled={!file || !description.trim() || loading}
                 >
                     {loading ? (
                         <>
                             <div className="spinner" />
-                            Analyzing with AI…
+                            Analyzing with AI...
                         </>
                     ) : (
-                        <>📍 Submit Report</>
+                        <>Submit Report</>
                     )}
                 </button>
             </div>

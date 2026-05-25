@@ -2,7 +2,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API_BASE = process.env.REACT_APP_API_URL || '';
+
 function Login({ onLogin }) {
+    const [mode, setMode] = useState('signin');
+    const [role, setRole] = useState('user');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -13,13 +17,15 @@ function Login({ onLogin }) {
         setLoading(true);
         setError('');
         try {
-            const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/login`,
-                { username, password }
-            );
+            const endpoint = mode === 'register' ? '/api/register' : '/api/login';
+            const payload = mode === 'register'
+                ? { username, password }
+                : { username, password, role };
+
+            const res = await axios.post(`${API_BASE}${endpoint}`, payload);
             onLogin(res.data.user);
         } catch (err) {
-            setError('Invalid credentials. Please try again.');
+            setError(err.response?.data?.message || 'Something went wrong. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -52,8 +58,55 @@ function Login({ onLogin }) {
             {/* ── Right panel: form ── */}
             <div className="login-right">
                 <div className="login-form-wrap">
-                    <h2>Welcome back</h2>
-                    <p>Sign in to your account to continue reporting</p>
+                    <div className="auth-tabs">
+                        <button
+                            type="button"
+                            className={mode === 'signin' ? 'active' : ''}
+                            onClick={() => {
+                                setMode('signin');
+                                setError('');
+                            }}
+                        >
+                            Sign in
+                        </button>
+                        <button
+                            type="button"
+                            className={mode === 'register' ? 'active' : ''}
+                            onClick={() => {
+                                setMode('register');
+                                setRole('user');
+                                setError('');
+                            }}
+                        >
+                            Register
+                        </button>
+                    </div>
+
+                    <h2>{mode === 'signin' ? 'Welcome back' : 'Create account'}</h2>
+                    <p>
+                        {mode === 'signin'
+                            ? 'Sign in to continue reporting or managing issues'
+                            : 'Register to start reporting civic issues'}
+                    </p>
+
+                    {mode === 'signin' && (
+                        <div className="role-toggle" aria-label="Sign in role">
+                            <button
+                                type="button"
+                                className={role === 'user' ? 'active' : ''}
+                                onClick={() => setRole('user')}
+                            >
+                                User
+                            </button>
+                            <button
+                                type="button"
+                                className={role === 'admin' ? 'active' : ''}
+                                onClick={() => setRole('admin')}
+                            >
+                                Admin
+                            </button>
+                        </div>
+                    )}
 
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
@@ -87,19 +140,21 @@ function Login({ onLogin }) {
                             className="login-btn"
                             disabled={loading}
                         >
-                            {loading ? 'Signing in…' : 'Sign In →'}
+                            {loading
+                                ? (mode === 'signin' ? 'Signing in...' : 'Creating account...')
+                                : (mode === 'signin' ? 'Sign In' : 'Register')}
                         </button>
 
                         {error && (
                             <p className="error-message">
-                                ⚠️ {error}
+                                {error}
                             </p>
                         )}
                     </form>
 
                     <div className="login-hint">
-                        <strong>Demo credentials</strong><br />
-                        user1 / pass123* &nbsp;·&nbsp; user2 / pass234*
+                        <strong>Admin credentials</strong><br />
+                        admin / admin123*
                     </div>
                 </div>
             </div>
