@@ -85,7 +85,12 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage });
+const upload = multer({
+    storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    }
+});
 
 function issueAgeSort() {
     return {
@@ -188,6 +193,8 @@ app.post("/api/login", (req, res) => {
     });
 });
 app.post('/api/issues', upload.single('image'), async (req, res) => {
+    let uploadedFilePath;
+
     try {
         const { author, description, lat, lng } = req.body;
         const submittedDescription = description?.trim();
@@ -198,11 +205,13 @@ app.post('/api/issues', upload.single('image'), async (req, res) => {
             });
         }
 
+        uploadedFilePath = req.file.path;
+
         const formData = new FormData();
 
         formData.append(
             'file',
-            fs.createReadStream(req.file.path)
+            fs.createReadStream(uploadedFilePath)
         );
 
         let aiResponse;
@@ -222,6 +231,9 @@ app.post('/api/issues', upload.single('image'), async (req, res) => {
             });
         }
 
+        const imageBuffer = fs.readFileSync(uploadedFilePath);
+        const imageDataUrl = `data:${req.file.mimetype};base64,${imageBuffer.toString('base64')}`;
+
         const newIssue = new Issue({
             description: submittedDescription || aiResponse.data.autoCaption,
             category: aiResponse.data.issueType,
@@ -230,7 +242,7 @@ app.post('/api/issues', upload.single('image'), async (req, res) => {
                 lat: parseFloat(lat),
                 lng: parseFloat(lng)
             },
-            imageUrl: `/uploads/${req.file.filename}`,
+            imageUrl: imageDataUrl,
             author
         });
 
@@ -243,6 +255,10 @@ app.post('/api/issues', upload.single('image'), async (req, res) => {
         res.status(500).json({
             message: 'Issue creation failed'
         });
+    } finally {
+        if (uploadedFilePath) {
+            fs.unlink(uploadedFilePath, () => {});
+        }
     }
 });
 app.get('/api/issues', async (req, res) => {
@@ -464,6 +480,17 @@ app.delete('/api/issues/:id', async (req, res) => {
         });
     }
 });
+
+app.use((error, req, res, next) => {
+    if (error?.code === 'LIMIT_FILE_SIZE') {
+        return res.status(413).json({
+            message: 'Image is too large. Please upload an image under 5MB.'
+        });
+    }
+
+    next(error);
+});
+
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
